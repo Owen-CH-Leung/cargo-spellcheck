@@ -154,7 +154,8 @@ impl<'a> PlainOverlay<'a> {
             Options::ENABLE_TABLES
                 | Options::ENABLE_FOOTNOTES
                 | Options::ENABLE_STRIKETHROUGH
-                | Options::ENABLE_TASKLISTS,
+                | Options::ENABLE_TASKLISTS
+                | Options::ENABLE_MATH,
             Some(broken_link_handler),
         );
 
@@ -201,6 +202,11 @@ impl<'a> PlainOverlay<'a> {
             };
 
             match event {
+                Event::Math(_dollas, _content) => {
+                    // skip math content
+                    dbg!(_dollas);
+                    dbg!(_content);
+                }
                 Event::Start(tag) => match tag {
                     Tag::Table(_alignments) => {
                         skip_table_text = true;
